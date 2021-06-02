@@ -1,0 +1,23 @@
+<launch>
+    <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="screen">
+        <remap from="points_in" to="lslidar_point_cloud_deskewed"/>
+        <param name="robot_frame" value="base_link"/>
+        <param name="odom_frame" value="odom"/>
+        <param name="icp_config" value="$(find marmotte_mapping)/params/realtime_icp_config.yaml"/>
+        <param name="input_filters_config" value="$(find marmotte_mapping)/params/realtime_input_filters.yaml"/>
+        <param name="map_post_filters_config" value="$(find marmotte_mapping)/params/realtime_post_filters.yaml"/>
+        <param name="map_update_condition" value="overlap"/>
+        <param name="map_update_overlap" value="1.0"/>
+        <param name="sensor_max_range" value="100"/>
+        <param name="min_dist_new_point" value="0.07"/>
+        <param name="compute_prob_dynamic" value="true"/>
+        <param name="map_tf_publish_rate" value="100"/>
+	<param name="prior_dynamic" value="0.3" />
+        <param name="threshold_dynamic" value="0.5" />
+        <param name="beam_half_angle" value="0.01" />
+        <param name="epsilon_a" value="0.1" />
+        <param name="epsilon_d" value="0.1" />
+        <param name="alpha" value="0.99" />
+        <param name="beta" value="0.9" />
+    </node>
+</launch>
