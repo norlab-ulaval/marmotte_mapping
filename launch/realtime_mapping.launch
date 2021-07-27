@@ -12,9 +12,9 @@
         <param name="min_dist_new_point" value="0.07"/>
         <param name="compute_prob_dynamic" value="true"/>
         <param name="map_tf_publish_rate" value="100"/>
-	<param name="prior_dynamic" value="0.3" />
-        <param name="threshold_dynamic" value="0.5" />
-        <param name="beam_half_angle" value="0.01" />
+	<param name="prior_dynamic" value="0.6" />
+        <param name="threshold_dynamic" value="0.75" />
+        <param name="beam_half_angle" value="0.017453292" /> <!-- 0.01 -->
         <param name="epsilon_a" value="0.1" />
         <param name="epsilon_d" value="0.1" />
         <param name="alpha" value="0.99" />
