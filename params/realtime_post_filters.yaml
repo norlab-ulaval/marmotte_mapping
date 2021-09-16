@@ -1,7 +1,16 @@
-- SurfaceNormalDataPointsFilter:
-    knn: 15
+- BoundingBoxDataPointsFilter:
+    xMin: -0.5
+    xMax: 0.5
+    yMin: -0.3
+    yMax: 0.3
+    zMin: -0.3
+    zMax: 0.3
+    removeInside: 1
 
 - CutAtDescriptorThresholdDataPointsFilter:
     descName: probabilityDynamic
     useLargerThan: 1
     threshold: 0.75
+
+- SurfaceNormalDataPointsFilter:
+        knn: 15
