@@ -1,5 +1,7 @@
 <launch>
-    <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="screen">
+    <arg name="backup_in_ram" default="true"/>
+
+    <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="screen" respawn="true">
         <remap from="points_in" to="lslidar_point_cloud_deskewed"/>
         <param name="robot_frame" value="base_link"/>
         <param name="odom_frame" value="odom"/>
@@ -21,7 +23,12 @@
         <param name="beta" value="0.99" />
         <param name="save_map_cells_on_hard_drive" value="false"/>
         <param name="publish_tfs_between_registrations" value="false"/>
+        <param name="backup_in_ram" value="$(arg backup_in_ram)"/>
     </node>
 
     <node pkg="topic_tools" type="throttle" name="map_throttler" args="messages map 1 map_throttled" output="screen"/>
+
+    <group if="$(arg backup_in_ram)">
+        <node pkg="norlab_icp_mapper_backup" type="norlab_icp_mapper_backup_node" name="norlab_icp_mapper_backup_node" output="screen"/>
+    </group>
 </launch>
