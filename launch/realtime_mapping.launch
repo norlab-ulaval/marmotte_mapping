@@ -1,7 +1,5 @@
 <launch>
     <arg name="backup_in_ram" default="true"/>
-    <arg name="initial_map_file_name" default=""/>
-    <arg name="initial_robot_pose" default="[[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]"/>
 
     <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="screen" respawn="true">
         <remap from="points_in" to="lslidar_point_cloud_deskewed"/>
@@ -16,7 +14,7 @@
         <param name="min_dist_new_point" value="0.11"/>
         <param name="compute_prob_dynamic" value="true"/>
         <param name="map_tf_publish_rate" value="100"/>
-	<param name="prior_dynamic" value="0.5" />
+        <param name="prior_dynamic" value="0.5" />
         <param name="threshold_dynamic" value="0.75" />
         <param name="beam_half_angle" value="0.017453292" /> <!-- 0.01 -->
         <param name="epsilon_a" value="0.01" />
@@ -26,8 +24,6 @@
         <param name="save_map_cells_on_hard_drive" value="false"/>
         <param name="publish_tfs_between_registrations" value="false"/>
         <param name="backup_in_ram" value="$(arg backup_in_ram)"/>
-        <param name="initial_map_file_name" value="$(arg initial_map_file_name)"/>
-        <param name="initial_robot_pose" value="$(arg initial_robot_pose)"/>
     </node>
 
     <node pkg="topic_tools" type="throttle" name="map_throttler" args="messages map 1 map_throttled" output="screen"/>
