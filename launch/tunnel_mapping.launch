@@ -1,14 +1,28 @@
 <launch>
-<!--    <arg name="map_theodolite"-->
-<!--         doc="Bool value. If set to true, use theodolite pose to build the map and do no localize"/>-->
     <arg name="folder" doc="Experiment root folder. Must constain bagfiles/ and results/ directories."/>
     <arg name="bagfile_name" doc="Bagfile name, located in folder/bagfiles/. Must not include .bag suffix"/>
     <arg name="rate" default="0.2" doc="Rate to play the rosbag with."/>
+    <arg name="map_update_type" default="0"
+         doc="Map update type:
+                0: delay
+                1: distance
+                2: overlap"
+    />
     <arg name="map_update_value" default="1.0"/>
     <arg name="map_folder"/>
     <arg name="output_name"/>
     <arg name="rviz" default="0"/>
     <arg name="prefix" default=""/>
+    <arg name="experiment_configuration" default="0"
+         doc="Experiment configurations:
+               0: start at odometry origin
+               1: start at identity
+               2: start at total station frame for empty dataset from 05/05
+               3: start at total station frame for cones dataset from 05/05
+               4: start at total station frame for empty dataset from 23/05
+               5: start at total station frame for constrained dataset from 23/05
+               6: start at total station frame for cones dataset from 23/05"
+    />
 
 
     <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="log" respawn="false"  required="true">
@@ -20,18 +34,22 @@
         <param name="input_filters_config" value="$(find marmotte_mapping)/params/realtime_input_filters.yaml"/>
         <param name="map_post_filters_config" value="$(find marmotte_mapping)/params/realtime_post_filters.yaml"/>
 
-<!--        <param name="map_update_condition" value="distance"/>-->
-<!--        <param name="map_update_distance" value="$(arg map_update_value)"/>-->
 
-        <param name="map_update_condition" value="delay"/>
-        <param name="map_update_delay" value="$(arg map_update_value)"/>
+        <param if="$(eval arg('map_update_type') == 0)" name="map_update_condition" value="delay"/>
+        <param if="$(eval arg('map_update_type') == 0)" name="map_update_delay" value="$(arg map_update_value)"/>
+
+        <param if="$(eval arg('map_update_type') == 1)"  name="map_update_condition" value="distance"/>
+        <param if="$(eval arg('map_update_type') == 1)"  name="map_update_distance" value="$(arg map_update_value)"/>
+
+        <param if="$(eval arg('map_update_type') == 2)"  name="map_update_condition" value="overlap"/>
+        <param if="$(eval arg('map_update_type') == 2)" name="map_update_overlap" value="$(arg map_update_value)"/>
 
         <param name="sensor_max_range" value="120"/>
         <param name="min_dist_new_point" value="0.05"/>
         <param name="compute_prob_dynamic" value="false"/>
         <param name="map_tf_publish_rate" value="20"/>
 
-        <param name="max_idle_time" value="20" />
+        <param name="max_idle_time" value="10" />
 
         <param name="beam_half_angle" value="0.017453292" /> <!-- 0.01 -->
 
@@ -39,18 +57,48 @@
 
         <param name="is_online" value="true"/>
 
+        <param if="$(eval arg('experiment_configuration') == 1)" name="initial_robot_pose"
+               value="[[1., 0., 0., 0.],
+                       [0., 1., 0., 0.],
+                       [0., 0., 1., 0.],
+                       [0., 0., 0., 1.]]"/>
+
         <!--transform to the theodolite origin-->
-        <param if="$(eval arg('is_cones') == 0)" name="initial_robot_pose"
+        <param if="$(eval arg('experiment_configuration') == 2)" name="initial_robot_pose"
                value="[[-0.98599695, -0.07274592, -0.15006016, -1.59241194],
                          [ 0.06193768, -0.99522114,  0.07548916,  1.32604622],
                          [-0.15483457,  0.0651377,  0.98579072, -0.99290214],
                          [ 0.,          0.,          0.,          1.        ]]"/>
 
-        <param if="$(eval arg('is_cones') == 1)" name="initial_robot_pose"
+        <param if="$(eval arg('experiment_configuration') == 3)" name="initial_robot_pose"
                value="[[-0.9825386, -0.0939533, -0.1605949, -1.5731169457802],
                          [ 0.0815375, -0.9932714,  0.0822406,  1.01176183156402],
                          [-0.1672411,  0.0677100,  0.9835882, -0.997503770229164],
                          [ 0.,          0.,          0.,          1.        ]]"/>
+
+        <param if="$(eval arg('experiment_configuration') == 4)" name="initial_robot_pose"
+               value="[[1., 0., 0., 0.],
+                       [0., 1., 0., 0.],
+                       [0., 0., 1., 0.],
+                       [0., 0., 0., 1.]]"/>
+
+        <param if="$(eval arg('experiment_configuration') == 5)" name="initial_robot_pose"
+               value="[[1., 0., 0., 0.],
+                       [0., 1., 0., 0.],
+                       [0., 0., 1., 0.],
+                       [0., 0., 0., 1.]]"/>
+
+        <param if="$(eval arg('experiment_configuration') == 6)" name="initial_robot_pose"
+               value="[[1., 0., 0., 0.],
+                       [0., 1., 0., 0.],
+                       [0., 0., 1., 0.],
+                       [0., 0., 0., 1.]]"/>
+
+        <param if="$(eval arg('experiment_configuration') == 11)" name="initial_robot_pose"
+               value="[[1., 0., 0., 0.],
+                       [0., 1., 0., 0.],
+                       [0., 0., 1., 0.],
+                       [0., 0., 0., 1.]]"/>
 
         <param name="final_map_file_name" value="$(arg map_folder)/$(arg prefix)final_map.vtk"/>
         <param name="final_trajectory_file_name" value="$(arg map_folder)/$(arg prefix)final_traj.vtk"/>
@@ -89,5 +137,10 @@
     />
     
     <node if="$(eval arg('rviz') == 1)" type="rviz" name="rviz" pkg="rviz" args="-d marmotte" output="log"/>
+
+    <node name="pcl_deskew_node" pkg="pointcloud_motion_deskew" type="pointcloud2_deskew_node" output="log" respawn="false">
+        <remap from="input_point_cloud" to="/velodyne_points" />
+        <remap from="output_point_cloud" to="/velodyne_points_deskewed"/>
+    </node>
 
 </launch>
