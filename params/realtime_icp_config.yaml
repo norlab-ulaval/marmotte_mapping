@@ -1,10 +1,5 @@
-#readingDataPointsFilters:
-#  - RandomSamplingDataPointsFilter:
-#      prob: 0.7
-
-#referenceDataPointsFilters:
-#  - RandomSamplingDataPointsFilter:
-#      prob: 0.1
+readingDataPointsFilters:
+referenceDataPointsFilters:
 
 matcher:
   KDTreeMatcher:
@@ -23,7 +18,6 @@ outlierFilters:
      maxAngle: 0.42
 
 errorMinimizer:
-#  PointToPointErrorMinimizer:
   PointToPlaneErrorMinimizer:
      force4DOF: 1
 
@@ -35,8 +29,8 @@ transformationCheckers:
   - CounterTransformationChecker:
       maxIterationCount: 40
   - BoundTransformationChecker:
-      maxRotationNorm: 5.5
-      maxTranslationNorm: 15.0
+      maxRotationNorm: 50.5
+      maxTranslationNorm: 105.0
 
 inspector:
   NullInspector

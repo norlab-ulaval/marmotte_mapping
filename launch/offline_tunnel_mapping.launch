@@ -15,13 +15,15 @@
     <arg name="prefix" default=""/>
 
 
-    <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="log" respawn="false"  required="true">
+    <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="screen" respawn="false"  required="true">
+        <param name="ignore_scan_count" value="3"/>
+        
         <remap from="points_in" to="velodyne_points_deskewed"/>
         <param name="robot_frame" value="velodyne"/>
         <param name="odom_frame" value="odom"/>
 
-        <param name="icp_config" value="$(find marmotte_mapping)/params/realtime_icp_config.yaml"/>
-        <param name="input_filters_config" value="$(find marmotte_mapping)/params/realtime_input_filters.yaml"/>
+        <param name="icp_config" value="$(find marmotte_mapping)/params/generated_icp_config.yaml"/>
+        <param name="input_filters_config" value="$(find marmotte_mapping)/params/tunnels_input_filters.yaml"/>
         <param name="map_post_filters_config" value="$(find marmotte_mapping)/params/realtime_post_filters.yaml"/>
 
 
@@ -35,17 +37,17 @@
         <param if="$(eval arg('map_update_type') == 2)" name="map_update_overlap" value="$(arg map_update_value)"/>
 
         <param name="sensor_max_range" value="120"/>
-        <param name="min_dist_new_point" value="0.05"/>
+        <param name="min_dist_new_point" value="0.0"/>
         <param name="compute_prob_dynamic" value="false"/>
         <param name="map_tf_publish_rate" value="20"/>
 
-        <param name="max_idle_time" value="10" />
+        <param name="max_idle_time" value="40" />
 
         <param name="beam_half_angle" value="0.017453292" /> <!-- 0.01 -->
 
         <param name="publish_tfs_between_registrations" value="true"/>
 
-        <param name="is_online" value="true"/>
+        <param name="is_online" value="false"/>
 
         <param name="initial_robot_pose"
                value="[[1., 0., 0., 0.],
@@ -70,11 +72,6 @@
         <param name="wheel_odom_velocity_scale_x" value="1.0" />
 
         <rosparam param="imu_correction_rpy">[0.00418879, -0.00254, 0.0]</rosparam> ## original
-<!--   same pitch, worst in roll  <rosparam param="imu_correction_rpy">[0.01418879, -0.00254, 0.0]</rosparam>-->
-<!--   same pitch, worst in roll      <rosparam param="imu_correction_rpy">[0.00418879, 0.01254, 0.0]</rosparam>-->
-<!--   same pitch ,worst in roll     <rosparam param="imu_correction_rpy">[0.10418879, -0.10254, 0.0]</rosparam>-->
-<!--        <rosparam param="imu_correction_rpy">[0.10418879, 0.10254, 0.0]</rosparam>-->
-<!--        <rosparam param="imu_correction_rpy">[0.17, 1.0, 0.0]</rosparam>-->
         ## If odom message needed
         <param name="publish_odom" value="true" />
         <param name="odom_topic_name" value="imu_and_wheel_odom" />
@@ -84,10 +81,6 @@
     <node pkg="rosbag" type="play" name="rosbag_play" output="log"
           args="--clock --quiet -k -r $(arg rate) $(arg folder)/bagfiles/$(arg bagfile_name).bag"
     />
-
-<!--    <node pkg="utils" type="localization_monitor.py" name="localization_monitor" output="log">-->
-<!--        <param name="log_folder" value="$(arg folder)/results"/>-->
-<!--    </node>-->
 
     <node pkg="rosbag" type="record" name="rosbag_record" output="log"
           args="record -O /tmp/$(arg output_name).bag /icp_odom /imu_and_wheel_odom /map /odom"
