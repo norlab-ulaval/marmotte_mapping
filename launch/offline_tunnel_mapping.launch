@@ -1,7 +1,7 @@
 <launch>
     <arg name="folder" doc="Experiment root folder. Must constain bagfiles/ and results/ directories."/>
     <arg name="bagfile_name" doc="Bagfile name, located in folder/bagfiles/. Must not include .bag suffix"/>
-    <arg name="rate" default="1.0" doc="Rate to play the rosbag with."/>
+    <arg name="rate" default="0.75" doc="Rate to play the rosbag with."/>
     <arg name="map_update_type" default="0"
          doc="Map update type:
                 0: delay
@@ -13,11 +13,14 @@
     <arg name="output_name"/>
     <arg name="rviz" default="0"/>
     <arg name="prefix" default=""/>
+    <arg name="perturb_x"/>
 
 
     <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="screen" respawn="false"  required="true">
-        <param name="ignore_scan_count" value="3"/>
-        
+        <param name="ignore_scan_count" value="0"/>
+        <param name="perturb_x" value="$(arg perturb_x)"/>
+        <param name="seed" value="$(arg prefix)"/>
+
         <remap from="points_in" to="velodyne_points_deskewed"/>
         <param name="robot_frame" value="velodyne"/>
         <param name="odom_frame" value="odom"/>
@@ -41,7 +44,7 @@
         <param name="compute_prob_dynamic" value="false"/>
         <param name="map_tf_publish_rate" value="20"/>
 
-        <param name="max_idle_time" value="40" />
+        <param name="max_idle_time" value="20" />
 
         <param name="beam_half_angle" value="0.017453292" /> <!-- 0.01 -->
 
@@ -60,37 +63,12 @@
 
     </node>
 
-<!--     Static TF publisher-->
-    <include file="$(find marmotte_description)/launch/description.launch"/>
-
-    <node pkg="norlab_imu_tools" type="imu_and_wheel_odom_node" name="imu_and_wheel_odom_node" output="log" respawn="true">
-        <remap from="imu_topic" to="/MTI_imu/data" />
-        <remap from="wheel_odom_topic" to="/odom" />
-        <param name="odom_frame" value="odom" />
-        <param name="base_frame" value="base_link" />
-        <param name="publish_translation" value="True" />
-        <param name="wheel_odom_velocity_scale_x" value="1.0" />
-
-        <rosparam param="imu_correction_rpy">[0.00418879, -0.00254, 0.0]</rosparam> ## original
-        ## If odom message needed
-        <param name="publish_odom" value="true" />
-        <param name="odom_topic_name" value="imu_and_wheel_odom" />
-    </node>
-
-
     <node pkg="rosbag" type="play" name="rosbag_play" output="log"
-          args="--clock --quiet -k -r $(arg rate) $(arg folder)/bagfiles/$(arg bagfile_name).bag"
+          args="--clock --pause --quiet -k -r $(arg rate) $(arg folder)/bagfiles/$(arg bagfile_name)_deskewed.bag"
     />
 
     <node pkg="rosbag" type="record" name="rosbag_record" output="log"
-          args="record -O /tmp/$(arg output_name).bag /icp_odom /imu_and_wheel_odom /map /odom"
+          args="record -O /tmp/$(arg output_name).bag /icp_odom"
     />
-    
-    <node if="$(eval arg('rviz') == 1)" type="rviz" name="rviz" pkg="rviz" args="-d marmotte" output="log"/>
-
-    <node name="pcl_deskew_node" pkg="pointcloud_motion_deskew" type="pointcloud2_deskew_node" output="log" respawn="false">
-        <remap from="input_point_cloud" to="/velodyne_points" />
-        <remap from="output_point_cloud" to="/velodyne_points_deskewed"/>
-    </node>
 
 </launch>
