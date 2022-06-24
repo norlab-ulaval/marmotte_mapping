@@ -1,0 +1,26 @@
+- BoundingBoxDataPointsFilter:
+      xMin: -0.8
+      xMax: 0.5
+      yMin: -0.3
+      yMax: 0.3
+      zMin: -0.3
+      zMax: 0.6
+      removeInside: 1
+
+# remove floor and ceiling
+#- BoundingBoxDataPointsFilter:
+#      xMin: -100
+#      xMax: 100
+#      yMin: -100
+#      yMax: 100
+#      zMin: -10
+#      zMax: 0.4
+#      removeInside: 0
+
+#- CutAtDescriptorThresholdDataPointsFilter:
+#    descName: probabilityDynamic
+#    useLargerThan: 1
+#    threshold: 0.75
+
+- SurfaceNormalDataPointsFilter:
+      knn: 15

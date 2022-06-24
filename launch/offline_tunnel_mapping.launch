@@ -1,7 +1,7 @@
 <launch>
     <arg name="folder" doc="Experiment root folder. Must constain bagfiles/ and results/ directories."/>
     <arg name="bagfile_name" doc="Bagfile name, located in folder/bagfiles/. Must not include .bag suffix"/>
-    <arg name="rate" default="0.75" doc="Rate to play the rosbag with."/>
+    <arg name="rate" default="1.0" doc="Rate to play the rosbag with."/>
     <arg name="map_update_type" default="0"
          doc="Map update type:
                 0: delay
@@ -25,9 +25,9 @@
         <param name="robot_frame" value="velodyne"/>
         <param name="odom_frame" value="odom"/>
 
-        <param name="icp_config" value="$(find marmotte_mapping)/params/generated_icp_config.yaml"/>
+        <param name="icp_config" value="$(find marmotte_mapping)/params/tunnels_icp_config.yaml"/>
         <param name="input_filters_config" value="$(find marmotte_mapping)/params/tunnels_input_filters.yaml"/>
-        <param name="map_post_filters_config" value="$(find marmotte_mapping)/params/realtime_post_filters.yaml"/>
+        <param name="map_post_filters_config" value="$(find marmotte_mapping)/params/tunnels_post_filters.yaml"/>
 
 
         <param if="$(eval arg('map_update_type') == 0)" name="map_update_condition" value="delay"/>
