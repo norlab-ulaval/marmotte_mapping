@@ -44,7 +44,7 @@
         <param name="compute_prob_dynamic" value="false"/>
         <param name="map_tf_publish_rate" value="20"/>
 
-        <param name="max_idle_time" value="20" />
+        <param name="max_idle_time" value="120" />
 
         <param name="beam_half_angle" value="0.017453292" /> <!-- 0.01 -->
 
