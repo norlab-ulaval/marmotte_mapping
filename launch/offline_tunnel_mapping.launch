@@ -14,6 +14,7 @@
     <arg name="rviz" default="0"/>
     <arg name="prefix" default=""/>
     <arg name="perturb_x"/>
+    <arg name="max_idle_time"/>
 
 
     <node pkg="norlab_icp_mapper_ros" type="mapper_node" name="mapper_node" output="screen" respawn="false"  required="true">
@@ -44,7 +45,7 @@
         <param name="compute_prob_dynamic" value="false"/>
         <param name="map_tf_publish_rate" value="20"/>
 
-        <param name="max_idle_time" value="120" />
+        <param name="max_idle_time" value="$(arg max_idle_time)" />
 
         <param name="beam_half_angle" value="0.017453292" /> <!-- 0.01 -->
 
