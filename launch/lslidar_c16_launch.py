@@ -17,7 +17,11 @@ def generate_launch_description():
                                 name='cloud_node',
                                 output='screen',
                                 emulate_tty=True,
-                                parameters=[decoder_dir],
+                                parameters=[
+                                    decoder_dir, 
+                                    {'frame_id': 'lslidarc16'},
+                                    {'scan_frame_id': 'lslidarc16'}
+                                    ],
                                 namespace="",
                                 )
     driver_node = LifecycleNode(package='lslidar_c16_driver',
