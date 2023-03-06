@@ -1,10 +1,10 @@
 <launch>
-	<include file="$(find-pkg-share marmotte_mapping)/launch/lslidar_c16_launch.py"/>
+	<include file="$(find-pkg-share marmotte_mapping)/launch/lslidar_c16.launch.xml"/>
 	<include file="$(find-pkg-share marmotte_mapping)/launch/mti10.launch.xml"/>
 	<include file="$(find-pkg-share marmotte_mapping)/launch/imu_and_wheel_odom.launch.xml"/>
 
-	<!-- node pkg="pointcloud_motion_deskew" exec="pointcloud2_deskew_node" name="pcl_deskew_node" >
+	<node pkg="pointcloud_motion_deskew" exec="pointcloud2_deskew_node" name="pcl_deskew_node" >
 		<remap from="input_point_cloud" to="lslidar_point_cloud" />
 		<remap from="output_point_cloud" to="lslidar_point_cloud_deskewed" />
-	</node -->
+	</node>
 </launch>
