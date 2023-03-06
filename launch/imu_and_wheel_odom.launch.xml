@@ -8,11 +8,12 @@
 	<param name="publish_translation" value="True" />
 	<param name="wheel_odom_velocity_scale_x" value="1.0" />
 
-	## This rosparam allows you to set IMU alignment w.r.t. base_link
-	<param name="imu_alignment_rpy" value="[0.0, 0.0, 3.14159265359]"/>
+	## This rosparam allows you to set IMU alignment w.r.t. base_link`
+	<!-- param name="imu_alignment_rpy" value="[0.0, 0.0, 3.14159265359]"/ -->
 
+	<param name="imu_alignment_rpy" value="[3.14159, 0.2618, 0.0]"/>
 	## If odom message needed
-	<param name="publish_odom" value="False" />
+	<param name="publish_odom" value="True" />
 	<param name="odom_topic_name" value="imu_and_wheel_odom" />
 	</node>
 </launch>
