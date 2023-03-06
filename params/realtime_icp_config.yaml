@@ -5,14 +5,14 @@ matcher:
     epsilon: 1
 
 outlierFilters:
-#  - TrimmedDistOutlierFilter:
-#     ratio: 0.8
-  - RobustOutlierFilter:
-     tuning: 3
-     robustFct: "cauchy"
-     scaleEstimator: "mad"
-  - SurfaceNormalOutlierFilter:
-     maxAngle: 0.42
+  - TrimmedDistOutlierFilter:
+     ratio: 0.8
+#  - RobustOutlierFilter:
+#     tuning: 3
+#     robustFct: "cauchy"
+#     scaleEstimator: "mad"
+#  - SurfaceNormalOutlierFilter:
+#     maxAngle: 0.42
 
 errorMinimizer:
   PointToPlaneErrorMinimizer:

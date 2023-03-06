@@ -1,5 +1,5 @@
-- FixStepSamplingDataPointsFilter:
-      startStep: 3
+#- FixStepSamplingDataPointsFilter:
+#      startStep: 3
 
 - BoundingBoxDataPointsFilter:
     xMin: -0.5
@@ -13,27 +13,27 @@
 - RandomSamplingDataPointsFilter:
       prob: 0.7
 
-- SurfaceNormalDataPointsFilter:
-      knn: 12
-      epsilon: 1.33
-      keepNormals: 1
-      keepDensities: 1
-      keepEigenValues: 1
-      keepEigenVectors: 0
-      sortEigen: 1
+#- SurfaceNormalDataPointsFilter:
+#      knn: 12
+#      epsilon: 1.33
+#      keepNormals: 1
+#      keepDensities: 1
+#      keepEigenValues: 1
+#      keepEigenVectors: 0
+#      sortEigen: 1
 
 #- VoxelGridDataPointsFilter:
 #      vSizeX: 0.1
 #      vSizeY: 0.1
 #      vSizeZ: 0.1
 
-- MaxDensityDataPointsFilter:
-      maxDensity: 10
+#- MaxDensityDataPointsFilter:
+#      maxDensity: 10
 
-- ObservationDirectionDataPointsFilter
+#- ObservationDirectionDataPointsFilter
 
-- OrientNormalsDataPointsFilter:
-      towardCenter: 1
+#- OrientNormalsDataPointsFilter:
+#      towardCenter: 1
 
-- SimpleSensorNoiseDataPointsFilter:
-    sensorType: 0
+#- SimpleSensorNoiseDataPointsFilter:
+#    sensorType: 0
