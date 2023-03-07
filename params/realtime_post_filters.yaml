@@ -14,3 +14,8 @@
 
 - SurfaceNormalDataPointsFilter:
         knn: 15
+
+- ObservationDirectionDataPointsFilter:
+
+- OrientNormalsDataPointsFilter:
+    towardCenter: 1

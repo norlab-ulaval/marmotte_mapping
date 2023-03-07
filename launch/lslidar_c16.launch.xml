@@ -1,0 +1,13 @@
+<launch>
+    <node pkg="lslidar_c16_driver" exec="lslidar_c16_driver_node" name="lslidar_c16_driver_node" output="screen">
+        <param name="lidar_ip" value="192.168.1.200"/>
+        <param name="device_port" value="2368"/>
+        <param name="add_multicast" value="false"/>
+        <param name="group_ip" value="224.1.1.2"/>
+    </node>
+
+    <node pkg="lslidar_c16_decoder" exec="lslidar_c16_decoder_node" name="lslidar_c16_decoder_node" output="screen">
+        <param name="frame_id" value="lidar_link"/>
+    </node>
+</launch>
+

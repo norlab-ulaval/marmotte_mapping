@@ -9,7 +9,7 @@
 	<param name="wheel_odom_velocity_scale_x" value="1.0" />
 
 	## If odom message needed
-	<param name="publish_odom" value="False" />
+	<param name="publish_odom" value="True" />
 	<param name="odom_topic_name" value="imu_and_wheel_odom" />
 	</node>
 </launch>
