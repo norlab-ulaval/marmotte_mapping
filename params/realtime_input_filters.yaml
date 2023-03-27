@@ -1,6 +1,3 @@
-# - FixStepSamplingDataPointsFilter:
-      # startStep: 3
-
 - BoundingBoxDataPointsFilter:
     xMin: -0.5
     xMax: 0.5
@@ -21,14 +18,6 @@
       keepEigenValues: 1
       keepEigenVectors: 0
       sortEigen: 1
-
-#- VoxelGridDataPointsFilter:
-#      vSizeX: 0.1
-#      vSizeY: 0.1
-#      vSizeZ: 0.1
-
-# - MaxDensityDataPointsFilter:
-      # maxDensity: 10
 
 - ObservationDirectionDataPointsFilter:
 
