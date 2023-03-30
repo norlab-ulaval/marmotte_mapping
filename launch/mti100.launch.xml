@@ -25,9 +25,13 @@
 		<param name="linear_acceleration_covariance_diagonal" value="$(var linear_acceleration_covariance_diagonal)"/>
 		<param name="orientation_covariance_diagonal" value="$(var orientation_covariance_diagonal)"/>
 	</node>
-
+	<node pkg="norlab_imu_tools" exec="imu_bias_compensator_node" name="imu_bias_compensator" output="screen" >
+		<remap from="imu_topic_in" to="/MTI_imu/data_raw" />
+		<remap from="bias_topic_in" to="/MTI_imu/bias" />
+		<remap from="imu_topic_out" to="/MTI_imu/data_unbiased" />
+	</node>
 	<node pkg="imu_filter_madgwick" exec="imu_filter_madgwick_node" name="imu_filter_node_magwick"  output="screen" >
-		<remap from="imu/data_raw" to="/MTI_imu/data_raw" />
+		<remap from="imu/data_raw" to="/MTI_imu/data_unbiased" />
 		<remap from="imu/mag" to="/MTI_imu/mag" />
 		<remap from="imu/data" to="/MTI_imu/data" />
 		<param name="gain" value="0.01"/>
