@@ -16,7 +16,7 @@ outlierFilters:
 
 errorMinimizer:
   PointToPlaneErrorMinimizer:
-     force4DOF: 1
+     force4DOF: 0
 
 transformationCheckers:
   - DifferentialTransformationChecker:
@@ -26,8 +26,8 @@ transformationCheckers:
   - CounterTransformationChecker:
       maxIterationCount: 40
   - BoundTransformationChecker:
-      maxRotationNorm: 0.5
-      maxTranslationNorm: 5.0
+      maxRotationNorm: 5000.0
+      maxTranslationNorm: 5000.0
 
 inspector:
   NullInspector
