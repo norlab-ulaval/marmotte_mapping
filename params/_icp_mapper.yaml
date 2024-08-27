@@ -1,0 +1,7 @@
+mapper_node:
+  ros__parameters:
+      robot_frame: "base_link"
+      odom_frame: "odom"
+      map_tf_publish_rate: 100.0
+      initial_map_file_name: ""
+      is_mapping: true
