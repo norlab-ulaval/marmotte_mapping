@@ -35,7 +35,7 @@ def generate_launch_description():
     )
 
     pcl_deskew_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
+        AnyLaunchDescriptionSource([
             os.path.join(pcl_deskew_include_folder, 'deskew.launch.xml')
         ])
     )
