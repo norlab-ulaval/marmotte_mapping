@@ -15,8 +15,7 @@ def generate_launch_description():
 
     mapper_config_folder = os.path.join(get_package_share_directory('marmotte_mapping'), 'launch', 'include')
     imu_odom_config_folder = os.path.join(get_package_share_directory('norlab_imu_tools'), 'launch')
-    altimeter_calib_config_folder = os.path.join(get_package_share_directory('altimeter_calibration'), 'launch')
-    pcl_desk_config_folder = os.path.join(get_package_share_directory('pointcloud_motion_deskew'), 'launch')
+    altimeter_calib_config_folder = os.path.join(get_package_share_directory('altimeter_calibration'))
     description_config_folder = os.path.join(get_package_share_directory('marmotte_description'), 'launch')
 
     icp_mapper_launch = IncludeLaunchDescription(
@@ -36,12 +35,6 @@ def generate_launch_description():
             os.path.join(altimeter_calib_config_folder, 'altimeter_calibration_alti_marmotte.launch.py')
         ])
     )
-
-    pcl_deskew_launch = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource([
-            os.path.join(pcl_desk_config_folder, 'deskew.launch.xml')
-        ])
-    )
     
     altitude_launch = IncludeLaunchDescription(
         AnyLaunchDescriptionSource([
@@ -59,7 +52,6 @@ def generate_launch_description():
         icp_mapper_launch,
         imu_and_wheel_odom_launch,
         altimeter_calib_launch,
-        pcl_deskew_launch,
         altitude_launch,
         description_launch
     ])
