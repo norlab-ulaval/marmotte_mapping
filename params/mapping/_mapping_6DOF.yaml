@@ -48,8 +48,8 @@ icp:
         ratio: 0.7
 
   errorMinimizer:
-    IdentityErrorMinimizer:
-          # force4DOF: 0
+    PointToPlaneErrorMinimizer:
+          force4DOF: 0
           # forceAltitude: 0
 
   transformationCheckers:
