@@ -23,7 +23,7 @@ def generate_launch_description():
             {"use_sim_time": True},
         ],
         remappings=[
-            ('points_in', 'lslidar_point_cloud'),
+            ('points_in', 'lslidar16/points'),
         ]
     )
 

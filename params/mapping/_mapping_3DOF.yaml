@@ -8,23 +8,23 @@ input:
       zMax: 0.5
       removeInside: 1
 
-  - BoundingBoxDataPointsFilter:
-      xMin: 2.0
-      xMax: 10.0
-      yMin: -0.5
-      yMax: 0.5
-      zMin: -0.3
-      zMax: 1.3
-      removeInside: 1
+  # - BoundingBoxDataPointsFilter:
+  #     xMin: 2.0
+  #     xMax: 10.0
+  #     yMin: -0.5
+  #     yMax: 0.5
+  #     zMin: -0.3
+  #     zMax: 1.3
+  #     removeInside: 1
 
-  - BoundingBoxDataPointsFilter:
-      xMin: -1.0
-      xMax: 1.0
-      yMin: -2.5
-      yMax: 2.5
-      zMin: -0.5
-      zMax: 2.5
-      removeInside: 1
+  # - BoundingBoxDataPointsFilter:
+  #     xMin: -1.0
+  #     xMax: 1.0
+  #     yMin: -2.5
+  #     yMax: 2.5
+  #     zMin: -0.5
+  #     zMax: 2.5
+  #     removeInside: 1
 
   - RandomSamplingDataPointsFilter:
       prob: 0.8

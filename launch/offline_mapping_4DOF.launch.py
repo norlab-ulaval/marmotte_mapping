@@ -26,26 +26,26 @@ def generate_launch_description():
 
     imu_and_wheel_odom_launch = IncludeLaunchDescription(
         AnyLaunchDescriptionSource([
-            os.path.join(imu_odom_config_folder, 'marmotte_imu_and_wheel_odom_with_altitude_launch.xml')
+            os.path.join(imu_odom_config_folder, 'marmotte_imu_and_wheel_odom_without_altitude_launch.xml')
         ])
     )
 
     altimeter_calib_launch = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource([
-            os.path.join(altimeter_calib_config_folder, 'altimeter_calibration_alti_marmotte.launch.py')
-        ])
+       AnyLaunchDescriptionSource([
+           os.path.join(altimeter_calib_config_folder, 'altimeter_calibration_alti_marmotte.launch.py')
+       ])
     )
     
     altitude_launch = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource([
-            os.path.join(imu_odom_config_folder, 'marmotte_altitude_computation_launch.xml')
-        ])
+       AnyLaunchDescriptionSource([
+           os.path.join(imu_odom_config_folder, 'marmotte_altitude_computation_launch.xml')
+       ])
     )
 
     description_launch = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource([
-            os.path.join(description_config_folder, 'description.launch.py')
-        ])
+       AnyLaunchDescriptionSource([
+           os.path.join(description_config_folder, 'description.launch.py')
+       ])
     )
 
     return LaunchDescription([

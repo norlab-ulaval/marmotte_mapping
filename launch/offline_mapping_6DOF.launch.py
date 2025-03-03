@@ -26,7 +26,7 @@ def generate_launch_description():
 
     imu_and_wheel_odom_launch = IncludeLaunchDescription(
         AnyLaunchDescriptionSource([
-            os.path.join(imu_odom_config_folder, 'marmotte_imu_and_wheel_odom_with_altitude_launch.xml')
+            os.path.join(imu_odom_config_folder, 'marmotte_imu_and_wheel_odom_without_altitude_launch.xml')
         ])
     )
 
